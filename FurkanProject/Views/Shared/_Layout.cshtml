@@ -1,0 +1,218 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - EntelTurk</title>
+    
+    <!-- Bootstrap CSS -->
+
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="header">
+        <a href="/Home" class="navbar-left"><img src="~/logo/projemlogo.png" width="90"></a>
+        <a href="/Home" class="navbar-right"><img src="~/logo/iletişimlogo.png" width="400"></a>
+        
+        @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "navbar-brand" }))
+        {
+            <p>
+                 @Html.TextBox("p")
+                <input type="submit" value="Ara" />
+            </p>}
+
+
+    </div>
+        <style>
+            /* Style the header with a grey background and some padding */
+
+            .header {
+        overflow: hidden;
+            background-color: black;
+        padding: 5px 1px;
+        }
+
+                /* Style the header links */
+                .header a {
+            float: right;
+        color: white;
+            text-align: center;
+        padding: 10px;
+            text-decoration: none;
+            font-size: 15px;
+            line-height: 25px;
+            border-radius: 4px;
+        }
+
+                    /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+                    .header a.logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+                    /* Change the background color on mouse-over */
+                    .header a:hover {
+            background-color: #ddd;
+                        color: black;
+        }
+
+                    /* Style the active/current link*/
+                    .header a.active {
+            background-color: dodgerblue;
+        color: white;
+        }
+
+            /* Float the link section to the right */
+            .header-right {
+            float: right;
+        }
+
+            /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+
+
+            .header-right {
+            float: none;
+        }
+
+            .footer {
+        position: fixed;
+            left: 0;
+        bottom: 0;
+        width: 100%;
+            background-color: #1e233c;
+                color: white;
+            text-align: center;
+        }
+
+            .navbar-fixed-top {
+            background-color: #1e233c
+            }
+
+            .glyphicon-log-in {
+        color: white;
+        }
+
+            .glyphicon-user {
+        color: white;
+        }
+
+            .fa-shopping-cart {
+        color: white;
+        }
+
+            .fa-truck {
+        color: white;
+        }
+
+            .navbar-inverse .navbar-nav > li > a {
+        color: white;
+            font-weight: bold;
+        }
+
+            .navbar-inverse .navbar-brand {
+        color: white;
+            font-weight: bold;
+        }
+
+            .navbar-inverse .navbar-nav > li > a:hover {
+        color: orange;
+        }
+
+            .navbar-inverse .navbar-brand:hover {
+        color: orange;
+        }
+
+        p {
+            font-family: Copperplate, Fantasy;
+        }
+
+        h4 {
+            font-family: Copperplate, Fantasy;
+        }
+        
+        
+
+
+        </style>
+
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("En Yeni Ürünlere Göz at!", "Newest", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse" style="float:left">
+                    <!--Get menu burdaydı-->
+                    <ul class="nav navbar-nav">
+                        @Html.Action("GetMenu", "Home")
+                    </ul>
+
+
+                </div>
+                <div style="float:right;color:white">
+                    @{
+                        if (Session["LoginUser"] == null)
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+
+                                <li><a href="Uye-Giris"><span class="glyphicon glyphicon-user"></span> Giriş Yap</a></li>
+                                <li><a href="Uye-Kayit"><span class="glyphicon glyphicon-log-in"></span> Üye ol</a></li>
+
+                            </ul>
+
+
+                        }
+                        else
+                        {
+                            var usr = Session["LoginUser"] as FurkanProject.Core.Model.Entity.User;
+                            //üye giriş yapılmış
+                            <p>
+                                Hoşgeldiniz @usr.Name @usr.LastName <br />
+                                <a href="/Sepetim"><span class="fas fa-shopping-cart"></span><font face="tahoma" color="white">  Sepetim</font></a>
+                                <a href="/Siparişlerim"><span class="fas fa-truck"></span><font face="tahoma" color="white">   Siparişlerim</font></a>
+                            </p>
+                        }
+                    }
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+
+            <div class="footer">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p>&copy; @DateTime.Now.Year-İzzet Furkan Çakmak</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="~/Scripts/bootstrap.min.js"></script>
+        @RenderSection("script", false)
+</body>
+</html>

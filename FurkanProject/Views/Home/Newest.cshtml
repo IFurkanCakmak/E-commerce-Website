@@ -1,0 +1,158 @@
+﻿
+
+
+
+
+@model List<FurkanProject.Core.Model.Entity.Product>
+@{
+    ViewBag.Title = "Newest";
+    var isLogin = (bool)ViewBag.IsLogin;
+}
+
+
+<p class="p1">EN SON EKLENEN EN YENİ ÜRÜNLER</p>
+@{
+    foreach (var item in Model)
+    {
+        <div class="productBox">
+            <p class="title">@item.Name</p>
+            <img src="@item.ImageUrl" />
+            <p>
+                @item.Brand
+            </p>
+
+            <p>
+                @item.Price.ToString("##,## $")
+            </p>
+
+            <p>
+                @item.Description
+            </p>
+            <a href="/urun/@item.Name.Replace(" ","-")/@item.ID" class="btn btn-success">Göz At</a>
+            @{
+                if (isLogin)
+                {
+                    <a href="#" data-pID="@item.ID" class="btn btn-default addCart"><i class="fas fa-shopping-basket"></i> Sepete At</a>
+                }
+            }
+
+        </div>
+    }
+}
+<div id="andModal" title="Teşekkürler">
+    Ürününüz Sepete Atılmıştır <br />
+    <a href="/sepetim" class="btn btn-success">Sepeti Görüntüle</a>
+</div>
+<div class="row"></div>
+<style>
+    .productBox {
+        width: 200px;
+        float: left;
+        margin: 10px;
+        border: 2px solid #000000;
+        padding: 5px;
+    }
+
+        .productBox img {
+            width: 100%;
+            height: 150px;
+            padding: 5px;
+        }
+
+        .productBox .title {
+            font-weight: bold;
+            text-align: center;
+        }
+
+    .productBox {
+        text-align: center;
+    }
+
+    .p1 {
+        text-align: center;
+        font-family: Copperplate, Fantasy;
+        font-size: 200%
+    }
+
+    .btn-success {
+        background-color: #1e233c
+    }
+
+    a.btn.btn-success {
+        color: white
+    }
+
+    h3 {
+        text-align: center;
+        font-family: Copperplate, Fantasy;
+        font-size: 200%
+    }
+
+    .btn-success:hover {
+        background-color: orange;
+    }
+</style>
+<section id="hizmetler">
+    <div class="container">
+        <div class="hizmetler-top text-center">
+            <h3>HİZMETLER</h3>
+            <P>Bu sitede neler yapabilirsiniz?</P>
+        </div>
+        <div class="hizmetler-content text-center">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="item-circle">
+                        <i class="fas fa-hand-holding-usd fa-3x"></i>
+                    </div>
+                    <h4>Hızlı Teslimat</h4>
+                    <p>Satın almak istediğiniz ürünler anlaştığımız kargo firmalarınca en hızlı şekilde tarafınıza teslim edilir.</p>
+                </div>
+                <div class="col-sm-4">
+                    <div class="item-circle">
+                        <i class="fas fa-chart-line fa-3x"></i>
+                    </div>
+                    <h4>En İyi Satış</h4>
+                    <p>Almak istediğiniz ürünleri en uygun fiyatlarla karşınıza getiriyoruz ve böylece paranız cebinizde kalıyor!</p>
+                </div>
+                <div class="col-sm-4">
+                    <div class="item-circle">
+                        <i class="far fa-credit-card fa-3x"></i>
+                    </div>
+                    <h4>Güvenli Ödeme</h4>
+                    <p>Kişisel bilgileriniz ve kart bilgileriniz en yüksek seviyede güvenlikle korunur ve asla 3.kişiler bu bilgilere ulaşamaz.Böylece alışverişiniz ve hesaplarınız hep güvende!</p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section script{
+    <script type="text/javascript">
+        $(function () {
+            $("#andModal").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
+            $(".addCart").on("click", function () {
+                var pid = $(this).attr("data-pID");
+
+                $.post("/Cart/AddProduct?productID=" + pid +" &quantity=1", function (data) {
+                    $("#andModal").dialog("open");
+                });
+
+                return false;
+            });
+        });
+    </script>
+}
+
+

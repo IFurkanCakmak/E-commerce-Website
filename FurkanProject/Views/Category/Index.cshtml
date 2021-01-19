@@ -1,0 +1,107 @@
+﻿
+
+
+
+
+@model List<FurkanProject.Core.Model.Entity.Product>
+@{
+    ViewBag.Title = "Index";
+    var category = (FurkanProject.Core.Model.Entity.Category)ViewBag.category;
+}
+
+
+
+<h2>@category.Name Kategorisindeki Ürünler</h2>
+@{
+    foreach (var item in Model)
+    {
+        <div class="productBox">
+            <p class="title">@item.Name</p>
+            <img src="@item.ImageUrl" />
+            <p>
+                @item.Brand
+            </p>
+
+            <p>
+                @item.Price.ToString("##,## $")
+            </p>
+
+            <p>
+                @item.Description
+            </p>
+            <a href="/urun/@item.Name.Replace(" ","-")/@item.ID" class="btn btn-success">Göz At</a>
+            <a href="#" data-pID="@item.ID" class="btn btn-default addCart"><i class="fas fa-shopping-basket"></i> Sepete At</a>
+        </div>
+    }
+}
+<div id="andModal" title="Teşekkürler">
+    Ürününüz Sepete Atılmıştır <br />
+    <a href="/sepetim" class="btn btn-success">Sepeti Görüntüle</a>
+</div>
+<div class="row"></div>
+<style>
+    .productBox {
+        width: 200px;
+        float: left;
+        margin: 10px;
+        border: 2px solid #000000;
+        padding: 5px;
+    }
+
+        .productBox img {
+            width: 100%;
+            height: 150px;
+            padding: 5px;
+        }
+
+        .productBox .title {
+            font-weight: bold;
+            text-align: center;
+        }
+
+    .productBox {
+        text-align: center;
+    }
+    .btn-success {
+        background-color: #1e233c
+    }
+    a.btn.btn-success{
+        color:white
+    }
+    h2 {
+        font-family: Copperplate, Fantasy;
+        font-size: 200%
+    }
+    .btn-success:hover{
+        background-color:orange;
+    }
+</style>
+@section script{
+    <script type="text/javascript">
+        $(function () {
+            $("#andModal").dialog({
+                autoOpen: false,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+
+            $(".addCart").on("click", function () {
+                var pid = $(this).attr("data-pID");
+
+                $.post("/Cart/AddProduct?productID=" + pid + " &quantity=1", function (data) {
+                    $("#andModal").dialog("open");
+                });
+
+                return false;
+            });
+        });
+    </script>
+}
+
+

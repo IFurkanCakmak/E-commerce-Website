@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Admin";
+    var user = Session["AdminLoginUser"] as FurkanProject.Core.Model.Entity.User;
+}
+
+<h2>Admin @user.Name @user.LastName Hoşgeldiniz</h2>
+<ul>
+    <li>
+        <a href="/Admin/Users">Üye Yönetimi</a>
+    </li>
+
+    <li>
+        <a href="/Admin/Products">Ürün Yönetimi</a>
+    </li>
+
+    <li>
+        <a href="/Admin/Categories">Kategori Yönetimi</a>
+    </li>
+    
+    <li>
+        <a href="/Admin/AdminOrders">Sipariş Yönetimi</a>
+    </li>
+</ul>
+

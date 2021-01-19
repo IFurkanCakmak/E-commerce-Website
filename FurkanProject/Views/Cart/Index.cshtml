@@ -1,0 +1,32 @@
+﻿@model IEnumerable<FurkanProject.Core.Model.Entity.Cart>
+
+
+<table class="table">
+    <tr>
+        <th>Ürün</th>
+        <th>Adet</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product.Name)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+     
+        <td>
+            @Html.ActionLink("Sepetten Kaldır", "Delete", new { id=item.ID })
+        </td>
+    </tr>
+}
+
+</table>
+<a href="/Siparisver" class="btn btn-primary"><i class="far fa-credit-card"></i> Satın Al</a>
+<style>
+    
+</style>

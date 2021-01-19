@@ -1,0 +1,15 @@
+﻿@model IEnumerable<FurkanProject.Core.Model.Entity.Category>
+
+@{
+    foreach (var item in Model)
+    {
+        <li class="item"><a class="list-group-item-heading" href="/Kategori/@item.Name.Replace(" ","-")/@item.ID">@item.Name</a></li>
+    }
+    
+}
+<style>
+    a.list-group-item-heading {
+        color: white;
+    }
+</style>
+
